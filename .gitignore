@@ -13,6 +13,9 @@
 # Pip environment
 *.lock
 
+# Logging
+*.log
+
 # Database
 *.sqlite3
 

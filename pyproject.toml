@@ -1,0 +1,23 @@
+[tool.black]
+line-length = 120
+exclude = '''
+(  # The root of the project
+  /(  # Exclude a few common directories in the
+      \.git
+    | logger\.log
+    | migrations\/*
+    | Pipfile
+    | Pipfile\.lock
+  )/
+)
+'''
+
+[tool.isort]  # https://black.readthedocs.io/en/stable/guides/using_black_with_other_tools.html#isort
+profile = "black"
+multi_line_output = 3
+include_trailing_comma = true
+force_grid_wrap = 0
+use_parentheses = true
+line_length = 120
+skip = ".env, migrations, logger.log, __init__.py, Pipfile, Pipfile.lock"
+src_paths = ["TaxiService"]

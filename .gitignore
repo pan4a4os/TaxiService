@@ -1,0 +1,20 @@
+# Migrations
+*/migrations/*
+!*/migrations/__init__.py
+
+# Python cache
+*/__pycache__/*
+*.pyc
+
+# Dot-env
+*.env
+!.env.dist
+
+# Pip environment
+*.lock
+
+# Database
+*.sqlite3
+
+# IDE
+*.idea

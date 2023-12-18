@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+{% load static %}
+
+<html lang="es">
+    <head>
+        <meta charset="utf-8" />
+        <title>{% block title %}{% endblock %} | Диспетчерська служба таксі</title>
+        <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}" />
+        {% block extra_css %}
+        {% endblock %}
+    </head>
+    <body>
+        <header>
+            <div id="logotipo">
+                <img src="{% static 'imgs/taxi.png' %}" />
+                <h1>- Служба таксі -</h1>
+                <img src="{% static 'imgs/taxi.png' %}" />
+            </div>
+        </header>
+
+        <nav>
+            <ul>
+                <li>
+                    <a href="/">Головна</a>
+                </li>
+                {% if user.username %}
+                    <li><a href="/order_taxi/">Замовити таксі</a></li>
+                    <li><a href="/logout">Вийти з системи</a></li>
+
+                {% else %}
+                    <li><a href="/register/">Зареєструватися</a></li>
+                    <li><a href="/login/">Вхід у систему</a></li>
+                    <li><a href="/login_admin/">Адміністрування</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+
+        <div class="barra">
+            <span class="esquina-izquierda"></span>
+            <span class="relleno-barra"></span>
+            <span class="esquina-derecha"></span>
+        </div>
+
+        <div id="content">
+            <div class="box">
+                {% block content %}
+                {% endblock %}
+            </div>
+        </div>
+
+        <footer>Служба таксі &copy; - {% now "d/m/Y" %}</footer>
+        {% block extra_js %}
+        {% endblock %}
+    </body>
+</html>

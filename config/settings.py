@@ -11,7 +11,7 @@ env.read_env(env_file=f"{BASE_DIR}/.env")
 
 # Define applications directory  |  /TaxiService/config/settings.py - 2  ==  /TaxiService/
 ROOT_DIR = environ.Path(start=__file__) - 2
-APPS_DIR = ROOT_DIR.path("source")
+SRC_DIR = ROOT_DIR.path("source")
 sys.path.append("source/apps")
 
 SECRET_KEY = env("DJANGO_SECRET_KEY")
@@ -30,7 +30,9 @@ DJANGO_APPS = (
     "django.contrib.staticfiles",
 )
 
-LOCAL_APPS = ()
+LOCAL_APPS = (
+    "source.apps.home.apps.HomeConfig",
+)
 
 THIRD_PARTY_APPS = ()
 
@@ -51,9 +53,13 @@ ROOT_URLCONF = "config.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [],
-        "APP_DIRS": True,
+        "DIRS": (str(SRC_DIR.path("templates")),),
         "OPTIONS": {
+            "debug": DEBUG,
+            "loaders": [
+                "django.template.loaders.filesystem.Loader",
+                "django.template.loaders.app_directories.Loader",
+            ],
             "context_processors": [
                 "django.template.context_processors.debug",
                 "django.template.context_processors.request",
@@ -90,7 +96,9 @@ USE_I18N = True
 USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
-STATIC_URL = "static/"
+STATIC_URL = "/static/"
+STATICFILES_DIRS = (str(SRC_DIR.path("static")),)
+
 
 # Default primary key field type
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"

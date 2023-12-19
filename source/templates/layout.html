@@ -5,6 +5,7 @@
     <head>
         <meta charset="utf-8" />
         <title>{% block title %}{% endblock %} | Диспетчерська служба таксі</title>
+        <link rel="icon" type="image/x-icon" href="{% static 'images/favicon/favicon.ico' %}">
         <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}" />
         {% block extra_css %}
         {% endblock %}
@@ -12,9 +13,9 @@
     <body>
         <header>
             <div id="logotipo">
-                <img src="{% static 'imgs/taxi.png' %}" />
+                <img src="{% static 'images/taxi.png' %}" />
                 <h1>- Служба таксі -</h1>
-                <img src="{% static 'imgs/taxi.png' %}" />
+                <img src="{% static 'images/taxi.png' %}" />
             </div>
         </header>
 
@@ -23,14 +24,15 @@
                 <li>
                     <a href="/">Головна</a>
                 </li>
-                {% if user.username %}
-                    <li><a href="/order_taxi/">Замовити таксі</a></li>
+                {% if request.user.is_authenticated %}
+                    <li><a href="/trips/newly_order/">Замовити таксі</a></li>
+                    {% if request.user.is_superuser %}
+                        <li><a href="/admin/">Адміністрування</a></li>
+                    {% endif %}
                     <li><a href="/logout">Вийти з системи</a></li>
-
                 {% else %}
-                    <li><a href="/register/">Зареєструватися</a></li>
+                    <li><a href="/sign_up/">Зареєструватися</a></li>
                     <li><a href="/login/">Вхід у систему</a></li>
-                    <li><a href="/login_admin/">Адміністрування</a></li>
                 {% endif %}
             </ul>
         </nav>

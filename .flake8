@@ -1,0 +1,31 @@
+[flake8]  # http://flake8.pycqa.org/en/latest/user/configuration.html
+
+# E203 -> Whitespace before "Symbol here"
+# F401 -> Unused import
+# F403 -> Can`t detect undefined names using * import
+# E731 -> Not assign a lambda expression, better use a def
+
+extend-ignore = E203, E731
+max-line-length = 120
+exclude =
+# Git
+    .git,
+    .gitignore,
+    .gitattributes,
+
+# Python cache
+    *.pyc,
+    __pycache__,
+
+# Initialization file (example: __init__.py)
+    __init__.py
+
+# Loggers
+    *.log,
+
+# Requirements
+    Pipfile,
+    Pipfile.lock,
+
+# Migrations
+    */migrations/*,

@@ -1,0 +1,35 @@
+{% extends "layout.html" %}
+
+
+{% block title %} {{ title }} {% endblock %}
+
+{% block content %}
+    <h1>{{ title }}</h1>
+
+     <div class="formulario_taxi">
+        <form method="POST" style="text-align: center;" class="formulario_taxi">
+            {% csrf_token %}
+
+            <p class="formulario_taxi">
+                <label for="id_user">Користувач</label>
+                <input type="text" id="id_user" value="{{ trip.user.username }}" readonly>
+            </p>
+            <p class="formulario_taxi">
+                <label for="id_origin">Пункт відправлення</label>
+                <input type="text" id="id_origin" value="{{ trip.origin }}" readonly>
+            </p>
+            <p class="formulario_taxi">
+                <label for="id_destination">Пункт призначення</label>
+                <input type="text" id="id_destination" value="{{ trip.destination }}" readonly>
+            </p>
+            <p class="formulario_taxi">
+                <label for="id_time">Час запланованої поїздки</label>
+                <input type="text" id="id_time" value="{{ trip.scheduled_time }}" readonly>
+            </p>
+            <p class="formulario_taxi">
+                <label for="id_date">Дата запланованої поїздки</label>
+                <input type="text" id="id_date" value="{{ trip.scheduled_date }}" readonly>
+            </p>
+        </form>
+    </div>
+{% endblock %}

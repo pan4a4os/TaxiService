@@ -1,0 +1,56 @@
+# Pre-Commit documentation:       https://pre-commit.com/
+# Black basics:                   https://black.readthedocs.io/en/stable/usage_and_configuration/the_basics.html
+# Isort documentation:            https://pycqa.github.io/isort/
+# Flake8 configuration:           https://flake8.pycqa.org/en/latest/user/configuration.html
+# Flake8 full listing of options: https://flake8.pycqa.org/en/latest/user/options.html#cmdoption-flake8-version
+
+default_install_hook_types:
+  [ pre-commit ]  # The list can include all of the following: pre-commit, pre-merge-commit, pre-push, pre-rebase,
+                  # post-checkout, post-commit, post-merge, post-rewrite, commit-msg, prepare-commit-msg
+default_language_version:
+  python: python3
+exclude: '(migrations|templates|static)/.*'
+fail_fast: false  # Set to true to have pre-commit stop running hooks after the first failure.
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.4.0
+    hooks:  # https://pre-commit.com/hooks.html
+      - id: check-added-large-files   # Prevents giant files from being committed
+      - id: check-ast                 # Simply checks whether the files parse as valid python
+#      - id: check-byte-order-marker  # Forbids files which have an utf-8 byte-order marker
+#      - id: check-builtin-literals   # Requires literal syntax when initializing empty or zero python builtin types
+#      - id: check-case-conflict      # Checks for files that would conflict in case-insensitive filesystems
+#      - id: check-docstring-first    # Checks a common error of defining a docstring after code
+#      - id: check-executables-have-shebangs  # Ensures that (non-binary) executables have a shebang.
+#      - id: check-json               # Checks json files for parseable syntax.
+      - id: check-merge-conflict      # Checks for files that contain merge conflict strings.
+      - id: debug-statements          # Checks for debugger imports and py37+ `breakpoint()` calls in python source.
+      - id: detect-private-key        # Detects the presence of private keys.
+      - id: end-of-file-fixer         # Ensures that a file is either empty, or ends with one newline.
+      - id: no-commit-to-branch       # Don't commit to branch
+        args: [ --branch, master ]
+#      - id: requirements-txt-fixer   # Sorts entries in requirements.txt.
+      - id: trailing-whitespace       #  Trims trailing whitespace.
+  - repo: https://github.com/psf/black
+    rev: 23.3.0
+    hooks:
+      - id: black
+        language_version: python3
+        stages: [ commit ]
+        entry: black
+        exclude: '(migrations|templates|static)/.*'
+  - repo: https://github.com/PyCQA/isort
+    rev: 5.12.0
+    hooks:
+      - id: isort
+        language_version: python3
+        stages: [ commit ]
+        entry: isort
+        exclude: '(migrations|templates|static)/.*'
+  - repo: https://github.com/pycqa/flake8
+    rev: 6.0.0
+    hooks:
+      - id: flake8
+        language_version: python3
+        stages: [ commit ]
+        exclude: '(migrations|templates|static)/.*'

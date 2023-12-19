@@ -1,7 +1,7 @@
-import environ
 import sys
-
 from pathlib import Path
+
+import environ
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -30,9 +30,7 @@ DJANGO_APPS = (
     "django.contrib.staticfiles",
 )
 
-LOCAL_APPS = (
-    "source.apps.home.apps.HomeConfig",
-)
+LOCAL_APPS = ("source.apps.home.apps.HomeConfig", "source.apps.trips.apps.TripsConfig")
 
 THIRD_PARTY_APPS = ()
 
@@ -102,3 +100,37 @@ STATICFILES_DIRS = (str(SRC_DIR.path("static")),)
 
 # Default primary key field type
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+#  ---------------  Logging settings  |  https://docs.python.org/3/library/logging.html  ---------------
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "formatters": {
+        "console": {
+            "()": "config.logger.CustomFormatter",
+            "format": "%(asctime)s | %(levelname)s | %(name)s.%(funcName)s() | line: %(lineno)d | %(message)s",
+        },
+        "file": {
+            "format": "%(asctime)s | %(levelname)s | %(name)s.%(funcName)s() | line: %(lineno)d | %(message)s",
+        },
+    },
+    "handlers": {
+        "console": {
+            "level": "INFO",
+            "class": "logging.StreamHandler",
+            "formatter": "console",
+        },
+        "file": {
+            "level": "INFO",
+            "class": "logging.FileHandler",
+            "formatter": "file",
+            "filename": env("LOGGING_FILENAME"),
+        },
+    },
+    "loggers": {
+        "": {"level": "INFO", "handlers": ("file", "console"), "propagate": True},
+    },
+}
+
+#  ------------------------------   Stripe   ------------------------------
+STRIPE_SECRET_KEY = env("STRIPE_SECRET_KEY")

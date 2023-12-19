@@ -1,0 +1,31 @@
+{% extends "layout.html" %}
+
+
+{% block title %} {{ title }} {% endblock %}
+
+{% block content %}
+	<h1>{{ title }}</h1>
+
+	{% if not user.username %}
+		<h2>Будь ласка, увійдіть, щоб отримати доступ до контенту програми.</h2>
+	{% endif %}
+
+	{% if messages %}
+		{% for message in messages %}
+			<div class="alert alert-warning">{{ message }}</div>
+		{% endfor %}
+	{% endif %}
+
+	<form method="post" action="">
+		{% csrf_token %}
+
+		<label for="username">Ім'я користувача:</label>
+		<input type="text" name="username"/>
+
+		<label for="password">Пароль:</label>
+		<input type="password" name="password"/>
+
+		<input type="submit" value="Увійти в систему"/>
+	</form>
+{% endblock %}
+

@@ -17,10 +17,8 @@
 	{% endif %}
 
 	{% if user.username %}
-		<h2>Ласкаво просимо, {{request.user.first_name}} {{user.last_name}}</h2>
-		<p>{{ user.email }}</p>
-	{% else %}
-		<h2>Будь ласка, увійдіть, щоб отримати доступ до контенту програми.</h2>
+		<h2>Ласкаво просимо, {{ request.user.first_name }} {{ request.user.last_name }}</h2>
+		<p>{{ request.user.email }}</p>
 	{% endif %}
 
 {% endblock %}

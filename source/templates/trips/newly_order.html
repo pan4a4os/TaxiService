@@ -1,0 +1,30 @@
+{% extends "layout.html" %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="/resources/demos/style.css">
+{% endblock %}
+
+{% block title %} {{ title }} {% endblock %}
+
+{% block content %}
+    <h1>{{ title }}</h1>
+
+     <div class="formulario_taxi">
+        <form method="POST" style="text-align: center;" class="formulario_taxi">
+            {% csrf_token %}
+            <p class="formulario_taxi">{{ trip_form.as_p }}</p>
+            <input type="submit" value="Замовити" style="margin-left: 50%">
+        </form>
+    </div>
+{% endblock %}
+
+{% block extra_js %}
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+    <script>
+        $( function() {
+            $("#id_scheduled_date").datepicker();
+        } );
+    </script>
+{% endblock %}

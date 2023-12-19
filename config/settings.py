@@ -132,5 +132,19 @@ LOGGING = {
     },
 }
 
+# ------------------------------   Email settings   ------------------------------
+EMAIL_PORT = env("EMAIL_PORT")
+EMAIL_HOST = env("EMAIL_HOST")
+EMAIL_USE_TLS = env.bool("EMAIL_USE_TLS")
+EMAIL_HOST_USER = env("EMAIL_HOST_USER")
+EMAIL_HOST_PASSWORD = env("EMAIL_HOST_PASSWORD")
+
+EMAIL_BACKEND = env("EMAIL_BACKEND")
+DEFAULT_FROM_EMAIL = env("DEFAULT_FROM_EMAIL")
+
+#  ------------------------------   Celery   ------------------------------
+CELERY_BROKER_URL = env("CELERY_BROKER_URL")
+CELERY_RESULT_BACKEND = env("CELERY_BROKER_URL")
+
 #  ------------------------------   Stripe   ------------------------------
 STRIPE_SECRET_KEY = env("STRIPE_SECRET_KEY")

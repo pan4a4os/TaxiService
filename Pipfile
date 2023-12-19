@@ -6,6 +6,8 @@ name = "pypi"
 [packages]
 Django = "==4.2.5"
 django-environ = "==0.11.2"
+celery = {version = "==5.3.4", extras = ["redis"]}
+redis = "==4.6.0"
 stripe = "==5.4.0"
 
 [dev-packages]

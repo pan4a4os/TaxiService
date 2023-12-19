@@ -41,7 +41,7 @@ def log_out(request) -> redirect:
 
 
 def sign_up(request) -> redirect:
-    """Контролер, який відповідає за реєстрацію користувача та вхід у систему."""
+    """Контролер, який відповідає за реєстрацію(та автоматично авторизацію) користувача та вхід у систему."""
 
     if not request.user.is_authenticated:
         register_form = RegisterForm()
@@ -53,7 +53,13 @@ def sign_up(request) -> redirect:
                 register_form.save()
                 messages.success(request=request, message="Ви успішно зареєструвалися!")
 
-                return redirect(to="/login/")
+                user = authenticate(
+                    request=request, username=request.POST.get("username"), password=request.POST.get("password1")
+                )
+                if user:
+                    login(request=request, user=user)
+
+                return redirect(to="/")
 
         return render(
             request=request,

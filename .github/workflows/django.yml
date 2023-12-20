@@ -28,6 +28,7 @@ jobs:
         pip install --upgrade pip pipenv setuptools
     - name: Run Tests
       run: |
+        pipenv shell
         python manage.py test
         pre-commit install
         pre-commit run

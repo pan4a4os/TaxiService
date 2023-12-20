@@ -29,6 +29,7 @@ jobs:
     - name: Run Tests
       run: |
         pipenv shell
+        pipenv update --dev
         python manage.py test
         pre-commit install
         pre-commit run

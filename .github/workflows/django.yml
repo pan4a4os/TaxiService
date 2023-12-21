@@ -4,6 +4,23 @@ on:
   pull_request:
     branches: [ "master" ]
 
+env:
+  DJANGO_SECRET_KEY: ${{ secrets.DJANGO_SECRET_KEY }}
+  DJANGO_DEBUG: ${{secrets.DJANGO_DEBUG}}
+  DJANGO_CSRF_TRUSTED_ORIGINS: ${{ secrets.DJANGO_CSRF_TRUSTED_ORIGINS }}
+  DJANGO_ALLOWED_HOSTS: ${{ secrets.DJANGO_ALLOWED_HOSTS }}
+  LOGGING_FILENAME: ${{ secrets.LOGGING_FILENAME }}
+  EMAIL_PORT: ${{ secrets.EMAIL_PORT }}
+  EMAIL_HOST: ${{ secrets.EMAIL_HOST }}
+  EMAIL_USE_TLS: ${{ secrets.EMAIL_USE_TLS }}
+  EMAIL_HOST_USER: ${{ secrets.EMAIL_HOST_USER }}
+  EMAIL_HOST_PASSWORD: ${{ secrets.EMAIL_HOST_PASSWORD }}
+  EMAIL_BACKEND: ${{ secrets.EMAIL_BACKEND }}
+  DEFAULT_FROM_EMAIL: ${{ secrets.DEFAULT_FROM_EMAIL }}
+  CSRF_FAILURE_VIEW: ${{ secrets.CSRF_FAILURE_VIEW }}
+  CELERY_BROKER_URL: ${{ secrets.CELERY_BROKER_URL }}
+  STRIPE_SECRET_KEY: ${{ secrets.STRIPE_SECRET_KEY }}
+
 jobs:
   build:
 
@@ -11,23 +28,21 @@ jobs:
     strategy:
       max-parallel: 4
       matrix:
-        python-version: [3.10]
+        python-version: [3.9]
 
     steps:
     - uses: actions/checkout@v3
-    - name: Set up Python 3.10
+    - name: Set up Python ${{ matrix.python-version }}
       uses: actions/setup-python@v3
       with:
-        python-version: 3.10
+        python-version: ${{ matrix.python-version }}
     - name: Install Dependencies
       run: |
-        apt-get update \
-        && apt-get install -y build-essential \
-        libcurl4-openssl-dev libssl-dev \
-        && rm -rf /var/lib/apt/lists/*
         pip install --upgrade pip pipenv setuptools
     - name: Run Tests
       run: |
+        pipenv lock --dev
+        pipenv sync --system
         python manage.py test
         pre-commit install
         pre-commit run

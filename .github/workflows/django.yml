@@ -11,14 +11,29 @@ jobs:
     strategy:
       max-parallel: 4
       matrix:
-        python-version: [3.9]
+        python-version: [3.7, 3.8, 3.9]
 
     steps:
     - uses: actions/checkout@v3
-    - name: Set up Python 3.9
+    - name: Set up Python ${{ matrix.python-version }}
       uses: actions/setup-python@v3
       with:
-        python-version: 3.9
+        python-version: ${{ matrix.python-version }}
+        envkey_DJANGO_SECRET_KEY: ${{ secrets.DJANGO_SECRET_KEY }}
+        envkey_DJANGO_DEBUG: ${{secrets.DJANGO_DEBUG}}
+        envkey_DJANGO_CSRF_TRUSTED_ORIGINS: ${{ secrets.DJANGO_CSRF_TRUSTED_ORIGINS }}
+        envkey_DJANGO_ALLOWED_HOSTS: ${{ secrets.DJANGO_ALLOWED_HOSTS }}
+        envkey_LOGGING_FILENAME: ${{ secrets.LOGGING_FILENAME }}
+        envkey_EMAIL_PORT: ${{ secrets.EMAIL_PORT }}
+        envkey_EMAIL_HOST: ${{ secrets.EMAIL_HOST }}
+        envkey_EMAIL_USE_TLS: ${{ secrets.EMAIL_USE_TLS }}
+        envkey_EMAIL_HOST_USER: ${{ secrets.EMAIL_HOST_USER }}
+        envkey_EMAIL_HOST_PASSWORD: ${{ secrets.EMAIL_HOST_PASSWORD }}
+        envkey_EMAIL_BACKEND: ${{ env.EMAIL_BACKEND }}
+        envkey_DEFAULT_FROM_EMAIL: ${{ env.DEFAULT_FROM_EMAIL }}
+        envkey_CSRF_FAILURE_VIEW: ${{ env.CSRF_FAILURE_VIEW }}
+        envkey_CELERY_BROKER_URL: ${{ env.CELERY_BROKER_URL }}
+        envkey_STRIPE_SECRET_KEY: ${{ env.STRIPE_SECRET_KEY }}
     - name: Install Dependencies
       run: |
         pip install --upgrade pip pipenv setuptools

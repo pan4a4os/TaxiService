@@ -4,6 +4,23 @@ on:
   pull_request:
     branches: [ "master" ]
 
+env:
+  DJANGO_SECRET_KEY: ${{ secrets.DJANGO_SECRET_KEY }}
+  DJANGO_DEBUG: ${{secrets.DJANGO_DEBUG}}
+  DJANGO_CSRF_TRUSTED_ORIGINS: ${{ secrets.DJANGO_CSRF_TRUSTED_ORIGINS }}
+  DJANGO_ALLOWED_HOSTS: ${{ secrets.DJANGO_ALLOWED_HOSTS }}
+  LOGGING_FILENAME: ${{ secrets.LOGGING_FILENAME }}
+  EMAIL_PORT: ${{ secrets.EMAIL_PORT }}
+  EMAIL_HOST: ${{ secrets.EMAIL_HOST }}
+  EMAIL_USE_TLS: ${{ secrets.EMAIL_USE_TLS }}
+  EMAIL_HOST_USER: ${{ secrets.EMAIL_HOST_USER }}
+  EMAIL_HOST_PASSWORD: ${{ secrets.EMAIL_HOST_PASSWORD }}
+  EMAIL_BACKEND: ${{ secrets.EMAIL_BACKEND }}
+  DEFAULT_FROM_EMAIL: ${{ secrets.DEFAULT_FROM_EMAIL }}
+  CSRF_FAILURE_VIEW: ${{ secrets.CSRF_FAILURE_VIEW }}
+  CELERY_BROKER_URL: ${{ secrets.CELERY_BROKER_URL }}
+  STRIPE_SECRET_KEY: ${{ secrets.STRIPE_SECRET_KEY }}
+
 jobs:
   build:
 
@@ -19,21 +36,6 @@ jobs:
       uses: actions/setup-python@v3
       with:
         python-version: ${{ matrix.python-version }}
-        DJANGO_SECRET_KEY: ${{ secrets.DJANGO_SECRET_KEY }}
-        DJANGO_DEBUG: ${{secrets.DJANGO_DEBUG}}
-        DJANGO_CSRF_TRUSTED_ORIGINS: ${{ secrets.DJANGO_CSRF_TRUSTED_ORIGINS }}
-        DJANGO_ALLOWED_HOSTS: ${{ secrets.DJANGO_ALLOWED_HOSTS }}
-        LOGGING_FILENAME: ${{ secrets.LOGGING_FILENAME }}
-        EMAIL_PORT: ${{ secrets.EMAIL_PORT }}
-        EMAIL_HOST: ${{ secrets.EMAIL_HOST }}
-        EMAIL_USE_TLS: ${{ secrets.EMAIL_USE_TLS }}
-        EMAIL_HOST_USER: ${{ secrets.EMAIL_HOST_USER }}
-        EMAIL_HOST_PASSWORD: ${{ secrets.EMAIL_HOST_PASSWORD }}
-        EMAIL_BACKEND: ${{ env.EMAIL_BACKEND }}
-        DEFAULT_FROM_EMAIL: ${{ env.DEFAULT_FROM_EMAIL }}
-        CSRF_FAILURE_VIEW: ${{ env.CSRF_FAILURE_VIEW }}
-        CELERY_BROKER_URL: ${{ env.CELERY_BROKER_URL }}
-        STRIPE_SECRET_KEY: ${{ env.STRIPE_SECRET_KEY }}
     - name: Install Dependencies
       run: |
         pip install --upgrade pip pipenv setuptools
